@@ -489,3 +489,6 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,unrealengine
 /Content/RBH/Content2
+/Content/LJJ/Content2
+/Content/KWJ/Content2
+/Content/ASM/Content2
