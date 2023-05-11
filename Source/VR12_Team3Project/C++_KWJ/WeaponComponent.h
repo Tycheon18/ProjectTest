@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "WeaponComponent.generated.h"
 
+class AWeaponBaseClass;
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class VR12_TEAM3PROJECT_API UWeaponComponent : public UActorComponent
@@ -19,16 +21,19 @@ public:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	bool AddWeapon(class UWeaponBase* Weapon);
+	bool AddWeapon(class AWeaponBaseClass* Weapon);
 
-	UPROPERTY(EditDefaultsOnly, Instanced , BlueprintReadWrite)
-	TArray<class UWeaponBase*> DefaultWeapon;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	AWeaponBaseClass* FirstWeapon;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	AWeaponBaseClass* SecondWeapon;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "WeaponInventory")
 	int32 Capacity;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
-	TArray<class UWeaponBase*> Items;
+	TArray<class AWeaponBaseClass*> Items;
 
 
 

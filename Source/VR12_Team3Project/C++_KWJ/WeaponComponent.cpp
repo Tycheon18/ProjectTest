@@ -2,7 +2,7 @@
 
 
 #include "WeaponComponent.h"
-#include "WeaponBase.h"
+#include "WeaponBaseClass.h"
 
 // Sets default values for this component's properties
 UWeaponComponent::UWeaponComponent()
@@ -24,7 +24,7 @@ void UWeaponComponent::BeginPlay()
 	
 }
 
-bool UWeaponComponent::AddWeapon(UWeaponBase* Weapon)
+bool UWeaponComponent::AddWeapon(AWeaponBaseClass* Weapon)
 {
 	return false;
 }
