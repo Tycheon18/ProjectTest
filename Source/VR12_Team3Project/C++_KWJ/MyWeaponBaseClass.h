@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "C++_KWJ/WeaponBaseClass.h"
+#include "WeaponBaseClass.h"
 #include "MyWeaponBaseClass.generated.h"
 
 /**
