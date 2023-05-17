@@ -4,14 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "BasicCharacter.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "WeaponBaseClass.generated.h"
 
 class UStaticMesh;
 class UTexture2D;
 class UWeaponComponent;
-class ABasicCharacter;
+
 
 UCLASS(Blueprintable, BlueprintType, DefaultToInstanced)
 class VR12_TEAM3PROJECT_API AWeaponBaseClass : public AActor
@@ -20,13 +19,9 @@ class VR12_TEAM3PROJECT_API AWeaponBaseClass : public AActor
 	
 public:	
 	// Sets default values for this actor's properties
-	AWeaponBaseClass();
+
 	AWeaponBaseClass(const class FObjectInitializer& ObjectInitializer);
 
-	void SetOwningPawn(ABasicCharacter* NewOwner);
-	void AttachMeshToPawn();
-	void OnEquip(const AWeaponBaseClass* LastWeapon);
-	
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 		FText UseActionText;
@@ -63,5 +58,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 };

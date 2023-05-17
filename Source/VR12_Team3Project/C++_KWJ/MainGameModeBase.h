@@ -28,9 +28,4 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
 	TSubclassOf<UUserWidget> HUDWidget;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
-		UPlayerWidget* PlayerWidget;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
-		TSubclassOf<UPlayerWidget> PlayerHUDWidget;
 };

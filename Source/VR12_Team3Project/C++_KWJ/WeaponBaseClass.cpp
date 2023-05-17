@@ -21,28 +21,6 @@ AWeaponBaseClass::AWeaponBaseClass(const class FObjectInitializer& ObjectInitial
 	//WeaponCollision->AttachTo(WeaponMesh, "weapon");
 }
 
-void AWeaponBaseClass::SetOwningPawn(ABasicCharacter* NewOwner)
-{
-	if (MyPawn != NewOwner)
-	{
-		MyPawn = NewOwner;
-	}
-}
-
-void AWeaponBaseClass::AttachMeshToPawn()
-{
-	if (MyPawn)
-	{
-		USkeletalMeshComponent* PawnMesh = MyPawn->GetSpecipicPawnMesh();
-		FName AttachPoint = MyPawn -> GetWeaponAttachPoint();
-		//WeaponMesh->AttachTo(PawnMesh, AttachPoint);
-	}
-}
-
-void AWeaponBaseClass::OnEquip(const AWeaponBaseClass* LastWeapon)
-{
-	AttachMeshToPawn();
-}
 
 // Called when the game starts or when spawned
 void AWeaponBaseClass::BeginPlay()
@@ -58,12 +36,5 @@ void AWeaponBaseClass::Tick(float DeltaTime)
 
 }
 
-void AWeaponBaseClass::NotifyActorBeginOverlap(AActor* OtherActor)
-{
-	if (OtherActor->IsA(AActor::StaticClass()) && MyPawn->IsAttack && OtherActor != MyPawn)
-	{
-		UGameplayStatics::ApplyDamage(OtherActor, 10.f, NULL, this, UDamageType::StaticClass());
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "ApplyDamage!");
-	}
-}
+
 

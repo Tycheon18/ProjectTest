@@ -3,7 +3,7 @@
 
 #include "MainGameModeBase.h"
 #include "Blueprint/UserWidget.h"
-#include "PlayerHud.h"
+
 
 AMainGameModeBase::AMainGameModeBase()
 {
