@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "MainGameModeBase.generated.h"
 
+class UPlayerWidget;
+
 /**
  * 
  */
@@ -17,4 +19,18 @@ class VR12_TEAM3PROJECT_API AMainGameModeBase : public AGameModeBase
 public:
 	AMainGameModeBase();
 	
+protected:
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
+	UUserWidget* CurrentWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
+	TSubclassOf<UUserWidget> HUDWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
+		UPlayerWidget* PlayerWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
+		TSubclassOf<UPlayerWidget> PlayerHUDWidget;
 };
