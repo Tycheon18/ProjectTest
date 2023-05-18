@@ -14,7 +14,4 @@ void AMainGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), HUDWidget);
-	CurrentWidget->AddToViewport();
-
 }

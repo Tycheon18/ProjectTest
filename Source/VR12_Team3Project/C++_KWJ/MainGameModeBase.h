@@ -22,10 +22,5 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
-	UUserWidget* CurrentWidget;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Game")
-	TSubclassOf<UUserWidget> HUDWidget;
 
 };
