@@ -19,10 +19,10 @@ public:
 	class UProgressBar* HpBar;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))
-	class UTextBlock* HpCount;
+	class UTextBlock* HpText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))
-	class UTextBlock* GoldCount;
+	class UTextBlock* GoldText;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))

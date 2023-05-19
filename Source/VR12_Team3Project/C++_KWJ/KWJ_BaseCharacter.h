@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "WeaponBaseClass.h"
 #include "KWJ_BaseCharacter.generated.h"
 
 UCLASS()
@@ -15,9 +16,26 @@ public:
 	// Sets default values for this character's properties
 	AKWJ_BaseCharacter();
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+private:
+
+	UPROPERTY(EditAnywhere,  Category = "PlayerState")
+	float MaxHp = 100.f;
+
+	UPROPERTY(ReplicatedUsing = OnRep_Health, VisibleAnywhere,Category = "PlayerState")
+	float CurHp = 100.f;
+
+	UFUNCTION()
+	void OnRep_Health();
+
+	UPROPERTY(Replicated)
+	class AWeaponBaseClass* Weapon;
+
+	class AKWJ_PlayerController* PlayerController;
 
 public:	
 	// Called every frame

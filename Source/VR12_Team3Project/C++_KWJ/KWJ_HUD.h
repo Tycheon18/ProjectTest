@@ -14,4 +14,20 @@ class VR12_TEAM3PROJECT_API AKWJ_HUD : public AHUD
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void DrawHUD() override;
+
+	UPROPERTY(EditAnywhere, Category = "PlayerState")
+	TSubclassOf<class UUserWidget> CharacterStateWidgetClass;
+
+
+	class UKWJ_CharacterStateWidget* CharacterStateWidget;
+
+protected:
+	virtual void BeginPlay() override;
+	void AddCharacterStateWidget();
+
+private:
+	
+
 };

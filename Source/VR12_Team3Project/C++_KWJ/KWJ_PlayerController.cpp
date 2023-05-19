@@ -14,6 +14,18 @@ AKWJ_PlayerController::AKWJ_PlayerController()
 
 void AKWJ_PlayerController::SetHUDHp(float CurHp, float MaxHp)
 {
+	PlayerHUD = PlayerHUD == nullptr ? Cast<AKWJ_HUD>(GetHUD()) : PlayerHUD;
+	
+	bool bHUDValid = PlayerHUD && PlayerHUD->CharacterStateWidget &&
+		PlayerHUD->CharacterStateWidget->HpBar &&
+		PlayerHUD->CharacterStateWidget->HpText;
+	if (bHUDValid)
+	{
+		const float HpPercent = CurHp / MaxHp; 
+		PlayerHUD->CharacterStateWidget->HpBar->SetPercent(HpPercent);
+		FString HpText = FString::Printf(TEXT("%d/%d"), FMath::CeilToInt(CurHp), FMath::CeilToInt(MaxHp));
+		PlayerHUD->CharacterStateWidget->HpText->SetText(FText::FromString(HpText));
+	}
 }
 
 void AKWJ_PlayerController::SetHUDScore(float Score)
@@ -50,4 +62,8 @@ void AKWJ_PlayerController::OnPossess(APawn* InPawn)
 
 void AKWJ_PlayerController::BeginPlay()
 {
+	Super::BeginPlay();
+
+	PlayerHUD = Cast<AKWJ_HUD>(GetHUD());
+
 }
