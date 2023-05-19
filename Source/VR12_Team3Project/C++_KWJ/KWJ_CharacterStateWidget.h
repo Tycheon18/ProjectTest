@@ -23,4 +23,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))
 	class UTextBlock* GoldCount;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))
+	class UTextBlock* MatxhCountdownText;
 };
