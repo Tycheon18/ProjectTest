@@ -23,10 +23,33 @@ public:
 	void SetHUDCarriedAmmo(int32 Ammo);
 	void SetHUDMatchCountdown(float CountdownTime);
 	virtual void OnPossess(APawn* InPawn) override;
+	virtual void Tick(float DeltaTime) override;
 
+	virtual float GetServerTime();
+	virtual void ReceivedPlayer() override;
 protected:
 	virtual void BeginPlay() override;
+	void SetHUDTime();
 
+
+	UFUNCTION(Server, Reliable)
+	void ServerRequestServerTime(float TimeOfClientRequest);
+	
+	UFUNCTION(Client, Reliable)
+	void ClientReportServerTime(float TimeofClientRequest, float TimeServerReceivedClientRequest);
+
+	float ClientServerDelta = 0.f;
+
+	UPROPERTY(EditAnywhere , Category = "Time")
+	float TimeSyncFrequency = 5.f;
+
+	float TimeSyncRunningTime = 0.f;
+	
+	void CheckTimeSync(float DeltaTime);
+private:
 	UPROPERTY();
 	class AKWJ_HUD* PlayerHUD;
+
+	float MatchTime = 120.f;
+	uint32 CountdownInt = 0;
 };
