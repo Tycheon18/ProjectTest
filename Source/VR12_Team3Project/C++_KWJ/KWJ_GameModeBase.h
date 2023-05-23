@@ -16,4 +16,12 @@ class VR12_TEAM3PROJECT_API AKWJ_GameModeBase : public AMainGameModeBase
 	
 public:
 	AKWJ_GameModeBase();
+	virtual void Tick(float DeltaTime) override;
+	
+protected:
+	virtual void BeginPlay() override;
+
+
+private:
+	float CountdownTime = 0.f;
 };

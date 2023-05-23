@@ -22,6 +22,8 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UWidgetComponent* OverheadWidget;
 
 	UPROPERTY(EditAnywhere,  Category = "PlayerState")
 	float MaxHp = 100.f;

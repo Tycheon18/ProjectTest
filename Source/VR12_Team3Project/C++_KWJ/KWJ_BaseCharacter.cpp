@@ -4,6 +4,7 @@
 #include "KWJ_BaseCharacter.h"
 #include "KWJ_PlayerController.h"
 #include "Net/UnrealNetwork.h"
+#include "Components/WidgetComponent.h"
 
 // Sets default values
 AKWJ_BaseCharacter::AKWJ_BaseCharacter()
@@ -11,6 +12,8 @@ AKWJ_BaseCharacter::AKWJ_BaseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//5PrimaryActorTick.bCanEverTick = true;
 
+	OverheadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverheadWidget"));
+	OverheadWidget->SetupAttachment(RootComponent);
 }
 
 void AKWJ_BaseCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
