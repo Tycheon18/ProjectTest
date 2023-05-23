@@ -26,5 +26,5 @@ public:
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))
-	class UTextBlock* MatxhCountdownText;
+	class UTextBlock* MatchCountdownText;
 };
