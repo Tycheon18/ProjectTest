@@ -18,4 +18,15 @@ public:
 	AKWJ_PlayerController();
 
 	void SetHUDHp(float CurHp, float MaxHp);
+	void SetHUDScore(float Score);
+	void SetHUDWeaponAmmo(int32 Ammo);
+	void SetHUDCarriedAmmo(int32 Ammo);
+	void SetHUDMatchCountdown(float CountdownTime);
+	virtual void OnPossess(APawn* InPawn) override;
+
+protected:
+	virtual void BeginPlay() override;
+
+	UPROPERTY();
+	class AKWJ_HUD* PlayerHUD;
 };
