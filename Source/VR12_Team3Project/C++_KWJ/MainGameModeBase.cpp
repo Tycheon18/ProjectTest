@@ -10,6 +10,8 @@ AMainGameModeBase::AMainGameModeBase()
 
 }
 
+
+
 void AMainGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();

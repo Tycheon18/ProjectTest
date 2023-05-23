@@ -19,6 +19,7 @@ class VR12_TEAM3PROJECT_API AMainGameModeBase : public AGameModeBase
 public:
 	AMainGameModeBase();
 	
+	
 protected:
 	virtual void BeginPlay() override;
 

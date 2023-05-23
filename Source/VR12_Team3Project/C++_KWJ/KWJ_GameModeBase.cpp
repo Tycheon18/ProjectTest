@@ -8,3 +8,12 @@ AKWJ_GameModeBase::AKWJ_GameModeBase()
 {
 	HUDClass = AKWJ_HUD::StaticClass();
 }
+
+void AKWJ_GameModeBase::Tick(float DeltaTime)
+{
+}
+
+void AKWJ_GameModeBase::BeginPlay()
+{
+}
+
