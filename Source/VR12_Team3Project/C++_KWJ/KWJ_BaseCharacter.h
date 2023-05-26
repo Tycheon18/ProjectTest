@@ -17,6 +17,9 @@ public:
 	AKWJ_BaseCharacter();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	UPROPERTY(Replicated)
+	bool bDisableGameplay = false; // Check to blueprint input compatible
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

@@ -24,6 +24,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))
 	class UTextBlock* GoldText;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))
+	class UTextBlock* ScoreAmount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))
+	class UTextBlock* DefeatsAmount;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BIndWidget))
 	class UTextBlock* MatchCountdownText;
