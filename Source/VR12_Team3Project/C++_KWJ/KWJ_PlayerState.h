@@ -14,4 +14,10 @@ class VR12_TEAM3PROJECT_API AKWJ_PlayerState : public APlayerState
 {
 	GENERATED_BODY()
 	
+public:
+	virtual void OnRep_Score() override;
+	void AddToScore(float ScoreAmount);
+private:
+	class AKWJ_BaseCharacter* Character;
+	class AKWJ_PlayerController* Controller;
 };

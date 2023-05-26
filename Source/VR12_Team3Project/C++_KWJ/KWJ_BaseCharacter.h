@@ -23,6 +23,10 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	
+
+	void PollInit();
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -41,6 +45,8 @@ private:
 	class AWeaponBaseClass* Weapon;
 
 	class AKWJ_PlayerController* PlayerController;
+
+	class AKWJ_PlayerState* PlayerState;
 
 public:	
 	// Called every frame

@@ -5,6 +5,7 @@
 #include "KWJ_PlayerController.h"
 #include "Net/UnrealNetwork.h"
 #include "Components/WidgetComponent.h"
+#include "KWJ_PlayerState.h"
 
 // Sets default values
 AKWJ_BaseCharacter::AKWJ_BaseCharacter()
@@ -37,6 +38,18 @@ void AKWJ_BaseCharacter::BeginPlay()
 	}
 }
 
+void AKWJ_BaseCharacter::PollInit()
+{
+	if (PlayerState == nullptr)
+	{
+		PlayerState = GetPlayerState<AKWJ_PlayerState>();
+		if (PlayerState)
+		{
+			PlayerState->AddToScore(0.f);
+		}
+	}
+}
+
 void AKWJ_BaseCharacter::OnRep_Health()
 {
 
@@ -46,6 +59,8 @@ void AKWJ_BaseCharacter::OnRep_Health()
 void AKWJ_BaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	PollInit();
 
 }
 

@@ -11,6 +11,8 @@ void AKWJ_HUD::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AddCharacterStateWidget();
+
 }
 
 void AKWJ_HUD::AddCharacterStateWidget()

@@ -47,7 +47,8 @@ void AKWJ_PlayerController::SetHUDHp(float CurHp, float MaxHp)
 {
 	PlayerHUD = PlayerHUD == nullptr ? Cast<AKWJ_HUD>(GetHUD()) : PlayerHUD;
 	
-	bool bHUDValid = PlayerHUD && PlayerHUD->CharacterStateWidget &&
+	bool bHUDValid = PlayerHUD &&
+		PlayerHUD->CharacterStateWidget &&
 		PlayerHUD->CharacterStateWidget->HpBar &&
 		PlayerHUD->CharacterStateWidget->HpText;
 	if (bHUDValid)
@@ -67,6 +68,16 @@ void AKWJ_PlayerController::SetHUDHp(float CurHp, float MaxHp)
 
 void AKWJ_PlayerController::SetHUDScore(float Score)
 {
+	PlayerHUD = PlayerHUD == nullptr ? Cast<AKWJ_HUD>(GetHUD()) : PlayerHUD;
+		
+	bool bHUDValid = PlayerHUD &&
+		PlayerHUD->CharacterStateWidget &&
+		PlayerHUD->CharacterStateWidget->ScoreAmount;
+	if (bHUDValid)
+	{
+		FString ScoreText = FString::Printf(TEXT("%d"), FMath::FloorToInt(Score));
+		PlayerHUD->CharacterStateWidget->ScoreAmount->SetText(FText::FromString(ScoreText));
+	}
 }
 
 void AKWJ_PlayerController::SetHUDWeaponAmmo(int32 Ammo)
