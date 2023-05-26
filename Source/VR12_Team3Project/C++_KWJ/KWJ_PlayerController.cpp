@@ -4,6 +4,7 @@
 #include "KWJ_PlayerController.h"
 #include "KWJ_HUD.h"
 #include "KWJ_CharacterStateWidget.h"
+#include "KWJ_PlayerState.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "KWJ_BaseCharacter.h"
@@ -11,6 +12,7 @@
 #include "KWJ_GameMode.h"
 #include "KWJ_Announcement.h"
 #include "Kismet/GameplayStatics.h"
+#include "KWJ_GameState.h"
 
 
 AKWJ_PlayerController::AKWJ_PlayerController()
@@ -25,6 +27,18 @@ void AKWJ_PlayerController::BeginPlay()
 	PlayerHUD = Cast<AKWJ_HUD>(GetHUD());
 	ServerCheckMatchState();
 
+}
+
+
+void AKWJ_PlayerController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+
+	AKWJ_BaseCharacter* PlayerCharacter = Cast<AKWJ_BaseCharacter>(InPawn);
+	if (PlayerCharacter)
+	{
+		SetHUDHp(PlayerCharacter->GetCurHp(), PlayerCharacter->GetMaxHp());
+	}
 }
 
 void AKWJ_PlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -77,6 +91,20 @@ void AKWJ_PlayerController::SetHUDScore(float Score)
 	{
 		FString ScoreText = FString::Printf(TEXT("%d"), FMath::FloorToInt(Score));
 		PlayerHUD->CharacterStateWidget->ScoreAmount->SetText(FText::FromString(ScoreText));
+	}
+}
+
+void AKWJ_PlayerController::SetHUDDefeats(int32 Defeats)
+{
+	PlayerHUD = PlayerHUD == nullptr ? Cast<AKWJ_HUD>(GetHUD()) : PlayerHUD;
+
+	bool bHUDValid = PlayerHUD &&
+		PlayerHUD->CharacterStateWidget &&
+		PlayerHUD->CharacterStateWidget->DefeatsAmount;
+	if (bHUDValid)
+	{
+		FString ScoreText = FString::Printf(TEXT("%d"), Defeats);
+		PlayerHUD->CharacterStateWidget->DefeatsAmount->SetText(FText::FromString(ScoreText));
 	}
 }
 
@@ -176,11 +204,6 @@ void AKWJ_PlayerController::PollInit()
 	}
 }
 
-
-void AKWJ_PlayerController::OnPossess(APawn* InPawn)
-{
-}
-
 float AKWJ_PlayerController::GetServerTime()
 {
 	return GetWorld()->GetTimeSeconds() + ClientServerDelta;
@@ -236,7 +259,36 @@ void AKWJ_PlayerController::HandleCooldown()
 			PlayerHUD->Announcement->SetVisibility(ESlateVisibility::Visible);
 			FString AnnouncementText("New Match Starts In:");
 			PlayerHUD->Announcement->AnnouncementText->SetText(FText::FromString(AnnouncementText));
-			PlayerHUD->Announcement->InfoText->SetText(FText());
+
+			AKWJ_GameState* GameState = Cast<AKWJ_GameState>(UGameplayStatics::GetGameState(this));
+			AKWJ_PlayerState* MyPlayerState = GetPlayerState<AKWJ_PlayerState>();
+			if (GameState && MyPlayerState)
+			{
+				TArray<AKWJ_PlayerState*> TopPlayers = GameState->TopScoringPlayers;
+				FString InfoTextString;
+				if (TopPlayers.Num() == 0)
+				{
+					InfoTextString = FString("There is no Winner.");
+				}
+				else if (TopPlayers.Num() == 1 && TopPlayers[0] == PlayerState)
+				{
+					InfoTextString = FString("You are the Winner!");
+				}
+				else if (TopPlayers.Num() == 1)
+				{
+					InfoTextString = FString::Printf(TEXT("Winner : \n%s"), *TopPlayers[0]->GetPlayerName());
+				}
+				else if (TopPlayers.Num() > 1)
+				{
+					InfoTextString = FString("Players tied for the Win :\n");
+					for (auto TiedPlayer : TopPlayers)
+					{
+						InfoTextString.Append(FString::Printf(TEXT("%s\n"), *TiedPlayer->GetPlayerName()));
+					}
+				}
+
+				PlayerHUD->Announcement->InfoText->SetText(FText::FromString(InfoTextString));
+			}
 		}
 	}
 	AKWJ_BaseCharacter* PlayerCharacter = Cast<AKWJ_BaseCharacter>(GetPawn());

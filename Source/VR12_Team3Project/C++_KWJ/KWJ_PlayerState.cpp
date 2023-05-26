@@ -4,10 +4,17 @@
 #include "KWJ_PlayerState.h"
 #include "KWJ_BaseCharacter.h"
 #include "KWJ_PlayerController.h"
+#include "Net/UnrealNetwork.h"
 
+void AKWJ_PlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AKWJ_PlayerState, Defeats);
+}
 void AKWJ_PlayerState::AddToScore(float ScoreAmount)
 {
-	Score += ScoreAmount;
+	SetScore(GetScore() + ScoreAmount);
 	Character = Character == nullptr ? Cast<AKWJ_BaseCharacter>(GetPawn()) : Character;
 	if (Character)
 	{
@@ -30,6 +37,34 @@ void AKWJ_PlayerState::OnRep_Score()
 		if (Controller)
 		{
 			Controller->SetHUDScore(Score);
+		}
+	}
+}
+
+
+void AKWJ_PlayerState::AddToDefeats(int32 DefeatsAmount)
+{
+	Defeats += DefeatsAmount;
+	Character = Character == nullptr ? Cast<AKWJ_BaseCharacter>(GetPawn()) : Character;
+	if (Character)
+	{
+		Controller = Controller == nullptr ? Cast<AKWJ_PlayerController>(Character->Controller) : Controller;
+		if (Controller)
+		{
+			Controller->SetHUDDefeats(DefeatsAmount);
+		}
+	}
+}
+
+void AKWJ_PlayerState::OnRep_Defeats()
+{
+	Character = Character == nullptr ? Cast<AKWJ_BaseCharacter>(GetPawn()) : Character;
+	if (Character)
+	{
+		Controller = Controller == nullptr ? Cast<AKWJ_PlayerController>(Character->Controller) : Controller;
+		if (Controller)
+		{
+			Controller->SetHUDDefeats(Defeats);
 		}
 	}
 }

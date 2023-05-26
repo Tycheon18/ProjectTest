@@ -31,6 +31,7 @@ void AKWJ_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	UpdateHUDHp();
 	PlayerController = Cast<AKWJ_PlayerController>(Controller);
 	if (PlayerController)
 	{
@@ -46,6 +47,7 @@ void AKWJ_BaseCharacter::PollInit()
 		if (PlayerState)
 		{
 			PlayerState->AddToScore(0.f);
+			PlayerState->AddToDefeats(0);
 		}
 	}
 }
@@ -53,6 +55,16 @@ void AKWJ_BaseCharacter::PollInit()
 void AKWJ_BaseCharacter::OnRep_Health()
 {
 
+}
+
+
+void AKWJ_BaseCharacter::UpdateHUDHp()
+{
+	PlayerController = PlayerController == nullptr ? Cast<AKWJ_PlayerController>(Controller) : PlayerController;
+	if (PlayerController)
+	{
+		PlayerController->SetHUDHp(CurHp, MaxHp);
+	}
 }
 
 // Called every frame

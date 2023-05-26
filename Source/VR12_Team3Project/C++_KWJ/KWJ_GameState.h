@@ -16,7 +16,12 @@ class VR12_TEAM3PROJECT_API AKWJ_GameState : public AGameState
 	
 public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	void UpdateTopScore(class AKWJ_PlayerState* ScoringPlayer);
 
 	UPROPERTY(Replicated)
-	TArray<class AKWJ_PlayerState*	> TopScoringPlayers;
+	TArray<class AKWJ_PlayerState*> TopScoringPlayers;
+
+private:
+
+	float TopScore = 0.f;
 };

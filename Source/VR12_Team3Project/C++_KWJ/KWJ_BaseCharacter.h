@@ -24,6 +24,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
+	void UpdateHUDHp();
 	
 
 	void PollInit();
@@ -55,4 +56,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	FORCEINLINE float GetCurHp() const { return CurHp; }
+	FORCEINLINE float GetMaxHp() const { return MaxHp; }
 };

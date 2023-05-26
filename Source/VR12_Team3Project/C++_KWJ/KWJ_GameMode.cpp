@@ -2,6 +2,8 @@
 
 
 #include "KWJ_GameMode.h"
+#include "KWJ_BaseCharacter.h"
+#include "KWJ_MonsterCharacter.h"
 #include "KWJ_PlayerController.h"
 
 namespace MatchState
@@ -9,8 +11,15 @@ namespace MatchState
 	const FName Cooldown = FName("Cooldown");
 }
 
+
+
 AKWJ_GameMode::AKWJ_GameMode()
 {
+}
+
+void AKWJ_GameMode::MonsterEliminated(AKWJ_BaseCharacter* ElimmedCharacter, AKWJ_MonsterCharacter* VictimMonster, AKWJ_PlayerController AttackerController)
+{
+
 }
 
 void AKWJ_GameMode::Tick(float DeltaTime)
