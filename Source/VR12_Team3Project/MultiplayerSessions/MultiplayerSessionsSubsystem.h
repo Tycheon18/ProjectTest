@@ -5,18 +5,18 @@
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "interfaces/OnlineSessionInterface.h"
-#include "MultiplayerSessionSubsystem.generated.h"
+#include "MultiplayerSessionsSubsystem.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class VR12_TEAM3PROJECT_API UMultiplayerSessionSubsystem : public UGameInstanceSubsystem
+class VR12_TEAM3PROJECT_API UMultiplayerSessionsSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 
 public:
-	UMultiplayerSessionSubsystem();
+	UMultiplayerSessionsSubsystem();
 
 	//
 	// To handle session fuctionality. The Menu class will call these

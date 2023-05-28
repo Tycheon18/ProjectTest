@@ -3,6 +3,7 @@
 
 #include "Menu.h"
 #include "Components/Button.h"
+#include "MultiplayerSessionsSubsystem.h"
 
 void UMenu::MenuSetup()
 {
@@ -22,6 +23,13 @@ void UMenu::MenuSetup()
 			PlayerController->SetInputMode(InputModeData);
 			PlayerController->SetShowMouseCursor(true);
 		}
+	}
+
+	UGameInstance* GameInstance = GetGameInstance();
+	if (GameInstance)
+	{
+		MultiplayerSessionsSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionsSubsystem>();
+
 	}
 }
 
@@ -53,6 +61,11 @@ void UMenu::HostButtonClicked()
 		GEngine->AddOnScreenDebugMessage(
 			-1, 15.f, FColor::Yellow, FString(TEXT("Host Button Clicked"))
 		);
+	}
+
+	if (MultiplayerSessionsSubsystem)
+	{
+		MultiplayerSessionsSubsystem->CreateSession(4, FString("FreeForAll"));
 	}
 }
 
