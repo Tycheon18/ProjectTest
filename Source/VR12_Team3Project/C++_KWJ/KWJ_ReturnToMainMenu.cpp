@@ -4,7 +4,7 @@
 #include "KWJ_ReturnToMainMenu.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/Button.h"
-#include "MultiplayerSessionsSubsystem.h"
+//#include "MultiplayerSessionsSubsystem.h"
 #include "GameFramework/GamemodeBase.h"
 
 void UKWJ_ReturnToMainMenu::MenuSetup()
@@ -33,7 +33,7 @@ void UKWJ_ReturnToMainMenu::MenuSetup()
 	UGameInstance* GameInstance = GetGameInstance();
 	if (GameInstance)
 	{
-		MultiplayerSessionsSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionsSubsystem>();
+		//MultiplayerSessionsSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionsSubsystem>();
 
 	}
 }
@@ -64,7 +64,7 @@ void UKWJ_ReturnToMainMenu::OnDestroySession(bool bWasSuccessful)
 			PlayerController = PlayerController == nullptr ? World->GetFirstPlayerController() : PlayerController;
 			if(PlayerController)
 			{ 
-				PlayerController->ClientReturnToMainMenuTextReason(FText());
+				//PlayerController->ClientReturnToMainMenuTextReason(FText());
 			}
 		}
 	}
@@ -76,20 +76,20 @@ void UKWJ_ReturnToMainMenu::MenuTearDown()
 	UWorld* World = GetWorld();
 	if (World)
 	{
-		APlayerController* PlayerController = World->GetFirstPlayerController();
-		if (PlayerController)
-		{
-			FInputModeGameOnly InputModeData;
-			PlayerController->SetInputMode(InputModeData);
-			PlayerController->SetShowMouseCursor(false);
-		}
+		//APlayerController* PlayerController = World->GetFirstPlayerController();
+		//if (PlayerController)
+		//{
+		//	FInputModeGameOnly InputModeData;
+		//	PlayerController->SetInputMode(InputModeData);
+		//	PlayerController->SetShowMouseCursor(false);
+		//}
 	}
 }
 
 void UKWJ_ReturnToMainMenu::ReturnButtonClicked()
 {
-	if (MultiplayerSessionsSubsystem)
-	{
-		MultiplayerSessionsSubsystem->DestroySession();
-	}
+	//if (MultiplayerSessionsSubsystem)
+	//{
+	//	MultiplayerSessionsSubsystem->DestroySession();
+	//}
 }

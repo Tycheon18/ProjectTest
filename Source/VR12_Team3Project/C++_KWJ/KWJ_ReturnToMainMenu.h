@@ -32,7 +32,7 @@ private:
 	void ReturnButtonClicked();
 
 	UPROPERTY()
-	class UMultiplayerSessionsSubsystem* MultiplayerSessionsSubsystem;
+	//class UMultiplayerSessionsSubsystem* MultiplayerSessionsSubsystem;
 
 	class APlayerController* PlayerController;
 };
