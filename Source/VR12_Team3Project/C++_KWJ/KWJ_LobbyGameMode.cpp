@@ -3,19 +3,76 @@
 
 #include "KWJ_LobbyGameMode.h"
 #include "GameFramework/GameStateBase.h"
+#include "GameFramework/PlayerState.h"
 
 void AKWJ_LobbyGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
 
-	int32 NumberOfPlayers = GameState.Get()->PlayerArray.Num();
-	if (NumberOfPlayers == 2)
+	if (GameState)
 	{
-		UWorld* World = GetWorld();
-		if (World)
+		int32 NumberOfPlayers = GameState.Get()->PlayerArray.Num();
+
+		if (GEngine)
 		{
-			bUseSeamlessTravel = true;
-			//World->ServerTravel(FString("");
+			GEngine->AddOnScreenDebugMessage(
+				1,
+				60.f,
+				FColor::Yellow,
+				FString::Printf(TEXT("Players in game: %d"), NumberOfPlayers)
+			);
+
+			APlayerState* PlayerState = NewPlayer->GetPlayerState<APlayerState>();
+			if (PlayerState)
+			{
+				FString PlayerName = PlayerState->GetPlayerName();
+
+				GEngine->AddOnScreenDebugMessage(
+					-1,
+					60.f,
+					FColor::Cyan,
+					FString::Printf(TEXT("%s has joined the game!"), *PlayerName)
+				);
+			}
 		}
+
+
+
+		if (NumberOfPlayers == 2)
+		{
+			UWorld* World = GetWorld();
+			if (World)
+			{
+				bUseSeamlessTravel = true;
+				//World->ServerTravel(FString("");
+			}
+		}
+	}
+}
+
+void AKWJ_LobbyGameMode::Logout(AController* Exiting)
+{
+	Super::Logout(Exiting);
+
+	APlayerState* PlayerState = Exiting->GetPlayerState<APlayerState>();
+	if (PlayerState)
+	{
+		int32 NumberOfPlayers = GameState.Get()->PlayerArray.Num();
+
+		GEngine->AddOnScreenDebugMessage(
+			1,
+			60.f,
+			FColor::Yellow,
+			FString::Printf(TEXT("Players in game: %d"), NumberOfPlayers - 1)
+		);
+
+		FString PlayerName = PlayerState->GetPlayerName();
+
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			60.f,
+			FColor::Cyan,
+			FString::Printf(TEXT("%s has exited the game!"), *PlayerName)
+		);
 	}
 }
