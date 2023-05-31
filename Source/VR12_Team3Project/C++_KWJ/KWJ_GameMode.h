@@ -26,6 +26,7 @@ public:
 	virtual void MonsterEliminated(class AKWJ_BaseCharacter* ElimmedCharacter, class AKWJ_MonsterCharacter* VictimMonster, class AKWJ_PlayerController AttackerController);
 
 	virtual void Tick(float DeltaTime) override;
+	void PlayerLeftGame(class AKWJ_PlayerState* PlayerLeaving);
 
 	UPROPERTY(EditDefaultsOnly)
 	float WaitingTime = 30.f;

@@ -24,6 +24,9 @@ protected:
 
 	UFUNCTION()
 	void OnDestroySession(bool bWasSuccessful);
+
+
+	void OnPlayerLeftGame();
 private:
 	UPROPERTY(meta = (BindWidget))
 	class UButton* ReturnButton;
@@ -32,7 +35,7 @@ private:
 	void ReturnButtonClicked();
 
 	UPROPERTY()
-	//class UMultiplayerSessionsSubsystem* MultiplayerSessionsSubsystem;
+	class UMultiplayerSessionsSubsystem* MultiplayerSessionsSubsystem;
 
 	class APlayerController* PlayerController;
 };

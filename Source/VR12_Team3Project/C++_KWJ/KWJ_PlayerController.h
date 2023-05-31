@@ -17,6 +17,7 @@ class VR12_TEAM3PROJECT_API AKWJ_PlayerController : public APlayerController
 public:
 	AKWJ_PlayerController();
 
+	
 	void SetHUDHp(float CurHp, float MaxHp);
 	void SetHUDScore(float Score);
 	void SetHUDDefeats(int32 Defeats);
@@ -38,6 +39,9 @@ protected:
 	void SetHUDTime();
 	void PollInit();
 
+	virtual void SetupInputComponent() override;
+
+
 	UFUNCTION(Server, Reliable)
 	void ServerRequestServerTime(float TimeOfClientRequest);
 	
@@ -58,9 +62,23 @@ protected:
 
 	UFUNCTION(Client, Reliable)
 	void ClientJoinMidgame(FName StateOfMatch, float Waiting, float Match, float Cooldown, float StartingTime);
+
+	void ShowReturnToMainMenu();
 private:
 	UPROPERTY();
 	class AKWJ_HUD* PlayerHUD;
+
+	/**
+	* Return to main menu
+	*/
+
+	UPROPERTY(EditAnywhere, Category = HUD)
+	TSubclassOf<class UUserWidget> ReturnToMainMenuWidget;
+
+	UPROPERTY()
+	class UKWJ_ReturnToMainMenu* ReturnToMainMenu;
+
+	bool bReturnToMainMenuOpen = false;
 
 	UPROPERTY();
 	class AKWJ_GameMode* Team3GameMode;

@@ -3,6 +3,8 @@
 
 #include "KWJ_GameMode.h"
 #include "KWJ_BaseCharacter.h"
+#include "KWJ_GameState.h"
+#include "KWJ_PlayerState.h"
 #include "KWJ_MonsterCharacter.h"
 #include "KWJ_PlayerController.h"
 
@@ -49,6 +51,21 @@ void AKWJ_GameMode::Tick(float DeltaTime)
 		{
 
 		}
+	}
+}
+
+void AKWJ_GameMode::PlayerLeftGame(class AKWJ_PlayerState* PlayerLeaving)
+{
+	if (PlayerLeaving == nullptr) return;
+	AKWJ_GameState* ThisGameState = GetGameState<AKWJ_GameState>();
+	if (ThisGameState && ThisGameState->TopScoringPlayers.Contains(PlayerLeaving))
+	{
+		ThisGameState->TopScoringPlayers.Remove(PlayerLeaving);
+	}
+	AKWJ_BaseCharacter* CharacterLeaving = Cast<AKWJ_BaseCharacter>(PlayerLeaving->GetPawn());
+	if (CharacterLeaving)
+	{
+		//CharacterLeaving->Elim(true);
 	}
 }
 

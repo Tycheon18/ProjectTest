@@ -3,6 +3,7 @@
 
 #include "KWJ_BaseCharacter.h"
 #include "KWJ_PlayerController.h"
+#include "KWJ_GameMode.h"
 #include "Net/UnrealNetwork.h"
 #include "Components/WidgetComponent.h"
 #include "KWJ_PlayerState.h"
@@ -64,6 +65,16 @@ void AKWJ_BaseCharacter::UpdateHUDHp()
 	if (PlayerController)
 	{
 		PlayerController->SetHUDHp(CurHp, MaxHp);
+	}
+}
+
+void AKWJ_BaseCharacter::ServerLeaveGame_Implementation()
+{
+	AKWJ_GameMode* GameMode = GetWorld()->GetAuthGameMode<AKWJ_GameMode>();
+	PlayerState = PlayerState == nullptr ? GetPlayerState<AKWJ_PlayerState>() : PlayerState;
+	if (GameMode && PlayerState)
+	{
+		GameMode->PlayerLeftGame(PlayerState);
 	}
 }
 

@@ -7,6 +7,8 @@
 #include "WeaponBaseClass.h"
 #include "KWJ_BaseCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLeftGame);
+
 UCLASS()
 class VR12_TEAM3PROJECT_API AKWJ_BaseCharacter : public ACharacter
 {
@@ -20,6 +22,11 @@ public:
 
 	UPROPERTY(Replicated)
 	bool bDisableGameplay = false; // Check to blueprint input compatible
+
+	UFUNCTION(Server, Reliable)
+		void ServerLeaveGame();
+
+	FOnLeftGame OnLeftGame;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -45,9 +52,15 @@ private:
 	UPROPERTY(Replicated)
 	class AWeaponBaseClass* Weapon;
 
+	UPROPERTY()
 	class AKWJ_PlayerController* PlayerController;
 
 	class AKWJ_PlayerState* PlayerState;
+
+	bool bLeftGame = false;
+
+
+
 
 public:	
 	// Called every frame

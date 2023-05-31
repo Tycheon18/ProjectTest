@@ -2,10 +2,11 @@
 
 
 #include "KWJ_ReturnToMainMenu.h"
+#include "KWJ_BaseCharacter.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/Button.h"
-//#include "MultiplayerSessionsSubsystem.h"
-#include "GameFramework/GamemodeBase.h"
+#include "../MultiplayerSessions/MultiplayerSessionsSubsystem.h"
+#include "GameFramework/GameModeBase.h"
 
 void UKWJ_ReturnToMainMenu::MenuSetup()
 {
@@ -26,14 +27,14 @@ void UKWJ_ReturnToMainMenu::MenuSetup()
 		}
 	}
 
-	if (ReturnButton)
+	if (ReturnButton && !ReturnButton->OnClicked.IsBound())
 	{
 		ReturnButton->OnClicked.AddDynamic(this, &UKWJ_ReturnToMainMenu::ReturnButtonClicked);
 	}
 	UGameInstance* GameInstance = GetGameInstance();
 	if (GameInstance)
 	{
-		//MultiplayerSessionsSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionsSubsystem>();
+		MultiplayerSessionsSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionsSubsystem>();
 
 	}
 }
@@ -45,12 +46,22 @@ bool UKWJ_ReturnToMainMenu::Initialize()
 		return false;
 	}
 
+	if (ReturnButton)
+	{
+		ReturnButton->OnClicked.AddDynamic(this, &UKWJ_ReturnToMainMenu::ReturnButtonClicked);
+	}
 	
 	return true;
 }
 
 void UKWJ_ReturnToMainMenu::OnDestroySession(bool bWasSuccessful)
 {
+	if (!bWasSuccessful)
+	{
+		ReturnButton->SetIsEnabled(true);
+		return;
+	}
+
 	UWorld* World = GetWorld();
 	if (World)
 	{
@@ -64,11 +75,12 @@ void UKWJ_ReturnToMainMenu::OnDestroySession(bool bWasSuccessful)
 			PlayerController = PlayerController == nullptr ? World->GetFirstPlayerController() : PlayerController;
 			if(PlayerController)
 			{ 
-				//PlayerController->ClientReturnToMainMenuTextReason(FText());
+				PlayerController->ClientReturnToMainMenuWithTextReason(FText());
 			}
 		}
 	}
 }
+
 
 void UKWJ_ReturnToMainMenu::MenuTearDown()
 {
@@ -76,20 +88,54 @@ void UKWJ_ReturnToMainMenu::MenuTearDown()
 	UWorld* World = GetWorld();
 	if (World)
 	{
-		//APlayerController* PlayerController = World->GetFirstPlayerController();
-		//if (PlayerController)
-		//{
-		//	FInputModeGameOnly InputModeData;
-		//	PlayerController->SetInputMode(InputModeData);
-		//	PlayerController->SetShowMouseCursor(false);
-		//}
+		PlayerController = World->GetFirstPlayerController();
+		if (PlayerController)
+		{
+			FInputModeGameOnly InputModeData;
+			PlayerController->SetInputMode(InputModeData);
+			PlayerController->SetShowMouseCursor(false);
+		}
+	}
+
+	if (ReturnButton && ReturnButton->OnClicked.IsBound())
+	{
+		ReturnButton->OnClicked.RemoveDynamic(this, &UKWJ_ReturnToMainMenu::ReturnButtonClicked);
+	}
+	if (MultiplayerSessionsSubsystem && MultiplayerSessionsSubsystem->MultiplayerOnDestroySessionComplete.IsBound())
+	{
+		MultiplayerSessionsSubsystem->MultiplayerOnDestroySessionComplete.RemoveDynamic(this, &UKWJ_ReturnToMainMenu::OnDestroySession);
 	}
 }
 
 void UKWJ_ReturnToMainMenu::ReturnButtonClicked()
 {
-	//if (MultiplayerSessionsSubsystem)
-	//{
-	//	MultiplayerSessionsSubsystem->DestroySession();
-	//}
+	ReturnButton->SetIsEnabled(false);
+
+	UWorld* World = GetWorld();
+	if (World)
+	{
+		APlayerController* FirstPlayerController = World->GetFirstPlayerController(); 
+		if (FirstPlayerController)
+		{
+			AKWJ_BaseCharacter* BaseCharacter = Cast<AKWJ_BaseCharacter>(FirstPlayerController->GetPawn());
+			if (BaseCharacter)
+			{
+				BaseCharacter->ServerLeaveGame();
+				BaseCharacter->OnLeftGame.AddDynamic(this, &UKWJ_ReturnToMainMenu::OnPlayerLeftGame);
+			}
+			else
+			{
+				ReturnButton->SetIsEnabled(true);
+			}
+		}
+	}
+
+}
+
+void UKWJ_ReturnToMainMenu::OnPlayerLeftGame()
+{
+	if (MultiplayerSessionsSubsystem)
+	{
+		MultiplayerSessionsSubsystem->DestroySession();
+	}
 }

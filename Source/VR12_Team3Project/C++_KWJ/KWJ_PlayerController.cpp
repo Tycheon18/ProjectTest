@@ -13,6 +13,7 @@
 #include "KWJ_Announcement.h"
 #include "Kismet/GameplayStatics.h"
 #include "KWJ_GameState.h"
+#include "KWJ_ReturnToMainMenu.h"
 
 
 AKWJ_PlayerController::AKWJ_PlayerController()
@@ -318,6 +319,27 @@ void AKWJ_PlayerController::CheckTimeSync(float DeltaTime)
 	}
 }
 
+void AKWJ_PlayerController::ShowReturnToMainMenu()
+{
+	if (ReturnToMainMenuWidget == nullptr) return;
+	if (ReturnToMainMenu == nullptr)
+	{
+		ReturnToMainMenu = CreateWidget<UKWJ_ReturnToMainMenu>(this, ReturnToMainMenuWidget);
+	}
+	if (ReturnToMainMenu)
+	{
+		bReturnToMainMenuOpen = !bReturnToMainMenuOpen;
+		if (bReturnToMainMenuOpen)
+		{
+			ReturnToMainMenu->MenuSetup();
+		}
+		else
+		{
+			ReturnToMainMenu->MenuTearDown();
+		}
+	}
+}
+
 void AKWJ_PlayerController::ServerCheckMatchState_Implementation()
 {
 	AKWJ_GameMode* PlayerGameMode = Cast<AKWJ_GameMode>(UGameplayStatics::GetGameMode(this));
@@ -349,6 +371,15 @@ void AKWJ_PlayerController::ClientReportServerTime_Implementation(float TimeofCl
 	float RoundTripTime = GetWorld()->GetTimeSeconds() - TimeofClientRequest;
 	float CurrentServerTime = TimeServerReceivedClientRequest + (0.5f * RoundTripTime);
 	ClientServerDelta = CurrentServerTime - GetWorld()->GetTimeSeconds();
+}
+
+void AKWJ_PlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+	if (InputComponent == nullptr) return;
+
+	InputComponent->BindAction("Quit", IE_Pressed, this, &AKWJ_PlayerController::ShowReturnToMainMenu);
+
 }
 
 void AKWJ_PlayerController::ServerRequestServerTime_Implementation(float TimeOfClientRequest)
