@@ -25,6 +25,7 @@ void AKWJ_BaseCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AKWJ_BaseCharacter, Weapon);
 	DOREPLIFETIME(AKWJ_BaseCharacter, CurHp);
 	DOREPLIFETIME(AKWJ_BaseCharacter, bDisableGameplay);
+	DOREPLIFETIME(AKWJ_BaseCharacter, CurStamina);
 }
 
 // Called when the game starts or when spawned
@@ -33,11 +34,15 @@ void AKWJ_BaseCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	UpdateHUDHp();
+	UpdateHUDStamina();
 	PlayerController = Cast<AKWJ_PlayerController>(Controller);
 	if (PlayerController)
 	{
 		PlayerController->SetHUDHp(CurHp, MaxHp);
+		PlayerController->SetHUDStamina(CurStamina, MaxStamina);
 	}
+
+
 }
 
 void AKWJ_BaseCharacter::PollInit()
@@ -58,6 +63,11 @@ void AKWJ_BaseCharacter::OnRep_Health()
 
 }
 
+void AKWJ_BaseCharacter::OnRep_Stamina()
+{
+
+}
+
 
 void AKWJ_BaseCharacter::UpdateHUDHp()
 {
@@ -68,6 +78,15 @@ void AKWJ_BaseCharacter::UpdateHUDHp()
 	}
 }
 
+void AKWJ_BaseCharacter::UpdateHUDStamina()
+{
+	PlayerController = PlayerController == nullptr ? Cast<AKWJ_PlayerController>(Controller) : PlayerController;
+	if (PlayerController)
+	{
+		PlayerController->SetHUDStamina(CurStamina, MaxStamina);
+	}
+}
+
 void AKWJ_BaseCharacter::ServerLeaveGame_Implementation()
 {
 	AKWJ_GameMode* GameMode = GetWorld()->GetAuthGameMode<AKWJ_GameMode>();
@@ -75,7 +94,7 @@ void AKWJ_BaseCharacter::ServerLeaveGame_Implementation()
 	if (GameMode && PlayerState)
 	{
 		GameMode->PlayerLeftGame(PlayerState);
-	}
+	} 
 }
 
 // Called every frame

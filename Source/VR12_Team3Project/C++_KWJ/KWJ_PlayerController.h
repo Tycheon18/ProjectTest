@@ -19,6 +19,7 @@ public:
 
 	
 	void SetHUDHp(float CurHp, float MaxHp);
+	void SetHUDStamina(float CurStamina, float MaxStamina);
 	void SetHUDScore(float Score);
 	void SetHUDDefeats(int32 Defeats);
 	void SetHUDWeaponAmmo(int32 Ammo);
@@ -64,6 +65,18 @@ protected:
 	void ClientJoinMidgame(FName StateOfMatch, float Waiting, float Match, float Cooldown, float StartingTime);
 
 	void ShowReturnToMainMenu();
+
+	UPROPERTY()
+	TArray<APlayerController*> PlayerControllers;
+
+	UFUNCTION()
+	void GetAllPlayerControllers();
+
+	UFUNCTION()
+	void CreateTeamState();
+
+	UFUNCTION()
+	void SetTeamState();
 private:
 	UPROPERTY();
 	class AKWJ_HUD* PlayerHUD;
@@ -96,11 +109,14 @@ private:
 	void OnRep_MatchState();
 
 	UPROPERTY()
-		class UKWJ_CharacterStateWidget* CharacterStateWidget;
+	class UKWJ_CharacterStateWidget* CharacterStateWidget;
 	bool bInitializeCharacterOverlay = false;
 
 	float HUDHp;
 	float HUDMaxHp;
+	float HUDStamina;
+	float HUDMaxStamina;
 	float HUDScore;
 	int32 HUDDefeats;
+
 };

@@ -24,7 +24,7 @@ public:
 	bool bDisableGameplay = false; // Check to blueprint input compatible
 
 	UFUNCTION(Server, Reliable)
-		void ServerLeaveGame();
+	void ServerLeaveGame();
 
 	FOnLeftGame OnLeftGame;
 protected:
@@ -32,7 +32,7 @@ protected:
 	virtual void BeginPlay() override;
 	
 	void UpdateHUDHp();
-	
+	void UpdateHUDStamina();
 
 	void PollInit();
 
@@ -46,8 +46,17 @@ private:
 	UPROPERTY(ReplicatedUsing = OnRep_Health, VisibleAnywhere,Category = "PlayerState")
 	float CurHp = 100.f;
 
+	UPROPERTY(EditAnywhere, Category = "PlayerState")
+	float MaxStamina = 100.f;
+
+	UPROPERTY(ReplicatedUsing = OnRep_Stamina, VisibleAnywhere, Category = "PlayerState")
+	float CurStamina = 100.f;
+
 	UFUNCTION()
 	void OnRep_Health();
+
+	UFUNCTION()
+	void OnRep_Stamina();
 
 	UPROPERTY(Replicated)
 	class AWeaponBaseClass* Weapon;

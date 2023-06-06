@@ -46,5 +46,3 @@ void AKWJ_HUD::DrawHUD()
 		const FVector2D ViewportCenter(ViewportSize.X / 2.f, ViewportSize.Y / 2.f);
 	}
 }
-
-
