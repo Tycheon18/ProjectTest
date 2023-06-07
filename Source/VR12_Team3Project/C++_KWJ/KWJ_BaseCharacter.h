@@ -27,6 +27,9 @@ public:
 	void ServerLeaveGame();
 
 	FOnLeftGame OnLeftGame;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building")
+	class UBuildManagerComponent* BuildManager;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

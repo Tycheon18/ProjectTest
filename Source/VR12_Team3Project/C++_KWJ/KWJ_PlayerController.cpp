@@ -5,6 +5,7 @@
 #include "KWJ_HUD.h"
 #include "KWJ_CharacterStateWidget.h"
 #include "KWJ_PlayerState.h"
+#include "Components/VerticalBox.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "KWJ_BaseCharacter.h"
@@ -14,6 +15,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "KWJ_GameState.h"
 #include "KWJ_ReturnToMainMenu.h"
+#include "KWJ_TeamStateWidget.h"
 #include "GameFramework/PlayerController.h"
 
 
@@ -444,9 +446,18 @@ void AKWJ_PlayerController::CreateTeamState()
 	for (auto PlayerController : PlayerControllers)
 	{
 		PlayerHUD->CharacterStateWidget->AddTeamStateWidget(PlayerHUD->CharacterStateWidget->TeamStateList);
+		AKWJ_BaseCharacter* BaseCharacter = Cast<AKWJ_BaseCharacter>(PlayerController->GetCharacter());
+		if (BaseCharacter != nullptr)
+		{
+			BaseCharacter->GetCurHp();
+			BaseCharacter->GetMaxHp();
+
+
+		}
 	}
 }
 
 void AKWJ_PlayerController::SetTeamState()
 {
+
 }

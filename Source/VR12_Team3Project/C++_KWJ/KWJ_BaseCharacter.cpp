@@ -7,6 +7,7 @@
 #include "Net/UnrealNetwork.h"
 #include "Components/WidgetComponent.h"
 #include "KWJ_PlayerState.h"
+#include "BuildManagerComponent.h"
 
 // Sets default values
 AKWJ_BaseCharacter::AKWJ_BaseCharacter()
@@ -16,6 +17,8 @@ AKWJ_BaseCharacter::AKWJ_BaseCharacter()
 
 	OverheadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverheadWidget"));
 	OverheadWidget->SetupAttachment(RootComponent);
+
+	BuildManager = CreateDefaultSubobject<UBuildManagerComponent>(TEXT("BuildManager"));
 }
 
 void AKWJ_BaseCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

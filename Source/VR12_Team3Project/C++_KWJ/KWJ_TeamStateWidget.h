@@ -23,4 +23,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UProgressBar* StaminaBar;
+
+	UFUNCTION()
+	void SetHp(float CurHp, float MaxHp);
+
+	UFUNCTION()
+	void SetStamina(float CurStamina, float MaxStamina);
 };

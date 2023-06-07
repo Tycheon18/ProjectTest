@@ -77,6 +77,8 @@ protected:
 
 	UFUNCTION()
 	void SetTeamState();
+
+	
 private:
 	UPROPERTY();
 	class AKWJ_HUD* PlayerHUD;
