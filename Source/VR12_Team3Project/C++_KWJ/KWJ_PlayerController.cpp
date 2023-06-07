@@ -27,7 +27,6 @@ void AKWJ_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-
 	PlayerHUD = Cast<AKWJ_HUD>(GetHUD());
 	ServerCheckMatchState();
 
@@ -58,6 +57,8 @@ void AKWJ_PlayerController::Tick(float DeltaTime)
 
 	SetHUDTime();
 	CheckTimeSync(DeltaTime);
+
+
 	
 }
 
@@ -269,10 +270,10 @@ void AKWJ_PlayerController::HandleMatchHasStarted()
 	if (PlayerHUD)
 	{
 		PlayerHUD->AddCharacterStateWidget();
-		if (PlayerHUD->Announcement)
-		{
-			PlayerHUD->Announcement->SetVisibility(ESlateVisibility::Hidden);
-		}
+		//if (PlayerHUD->Announcement)
+		//{
+		//	PlayerHUD->Announcement->SetVisibility(ESlateVisibility::Hidden);
+		//}
 	}
 }
 
@@ -409,7 +410,6 @@ void AKWJ_PlayerController::SetupInputComponent()
 	if (InputComponent == nullptr) return;
 
 	InputComponent->BindAction("Quit", IE_Pressed, this, &AKWJ_PlayerController::ShowReturnToMainMenu);
-
 }
 
 void AKWJ_PlayerController::ServerRequestServerTime_Implementation(float TimeOfClientRequest)
@@ -439,22 +439,22 @@ void AKWJ_PlayerController::CreateTeamState()
 {
 	PlayerHUD = PlayerHUD == nullptr ? Cast<AKWJ_HUD>(GetHUD()) : PlayerHUD;
 
-	bool bTeamWidgetValid = PlayerHUD &&
-		PlayerHUD->CharacterStateWidget &&
-		PlayerHUD->CharacterStateWidget->TeamStateList;
+	//bool bTeamWidgetValid = PlayerHUD &&
+	//	PlayerHUD->CharacterStateWidget &&
+	//	PlayerHUD->CharacterStateWidget->TeamStateList;
+	//	
+	//for (auto PlayerController : PlayerControllers)
+	//{
+	//	PlayerHUD->CharacterStateWidget->AddTeamStateWidget();
+	//	AKWJ_BaseCharacter* BaseCharacter = Cast<AKWJ_BaseCharacter>(PlayerController->GetCharacter());
+	//	if (BaseCharacter != nullptr)
+	//	{
+	//		BaseCharacter->GetCurHp();
+	//		BaseCharacter->GetMaxHp();
 
-	for (auto PlayerController : PlayerControllers)
-	{
-		PlayerHUD->CharacterStateWidget->AddTeamStateWidget(PlayerHUD->CharacterStateWidget->TeamStateList);
-		AKWJ_BaseCharacter* BaseCharacter = Cast<AKWJ_BaseCharacter>(PlayerController->GetCharacter());
-		if (BaseCharacter != nullptr)
-		{
-			BaseCharacter->GetCurHp();
-			BaseCharacter->GetMaxHp();
 
-
-		}
-	}
+	//	}
+	//}
 }
 
 void AKWJ_PlayerController::SetTeamState()

@@ -21,11 +21,10 @@ class VR12_TEAM3PROJECT_API AKWJ_GameMode : public AGameMode
 	GENERATED_BODY()
 	
 public:
-	AKWJ_GameMode();
-
 	virtual void MonsterEliminated(class AKWJ_BaseCharacter* ElimmedCharacter, class AKWJ_MonsterCharacter* VictimMonster, class AKWJ_PlayerController AttackerController);
 
 	virtual void Tick(float DeltaTime) override;
+
 	void PlayerLeftGame(class AKWJ_PlayerState* PlayerLeaving);
 
 	UPROPERTY(EditDefaultsOnly)
@@ -40,8 +39,7 @@ public:
 	float LevelStartingTime = 0.f;
 
 protected:
-	virtual void BeginPlay() override;
-
+	
 	virtual void OnMatchStateSet() override;
 
 private:

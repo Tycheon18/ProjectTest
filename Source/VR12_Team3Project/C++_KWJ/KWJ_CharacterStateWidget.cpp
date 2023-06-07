@@ -1,52 +1,85 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "KWJ_CharacterStateWidget.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
-#include "KWJ_CharacterStateWidget.h"
 #include "Components/VerticalBox.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
+#include "GameFramework/Character.h"
 #include "KWJ_TeamStateWidget.h"
+#include "KWJ_BaseCharacter.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 
-void UKWJ_CharacterStateWidget::AddTeamStateWidget(UVerticalBox* VerticalBox)
+void UKWJ_CharacterStateWidget::AddTeamStateWidget()
 {
-    if (VerticalBox)
+    if (TeamStateList)
     {
-        VerticalBox->ClearChildren();
+        TeamStateList->ClearChildren();
 
-        //    UWorld* World = GetWorld();
-        //    if (World)
-        //    {
-        //        TArray<AActor*> FoundActors;
-        //        UGameplayStatics::GetAllActorsOfClass(World, AYourActorClass::StaticClass(), FoundActors);
+            UWorld* World = GetWorld();
+            if (World)
+            {
+                TArray<AActor*> FoundActors;
+                UGameplayStatics::GetAllActorsOfClass(World, AKWJ_BaseCharacter::StaticClass(), FoundActors);
 
-        //        // FoundActors 배열에 AYourActorClass 클래스의 모든 액터들이 저장됩니다.
+                GEngine->AddOnScreenDebugMessage(
+                    1,
+                    60.f,
+                    FColor::Yellow,
+                    FString::Printf(TEXT("Actors Num = %d"), sizeof(FoundActors))
+                );
 
-        //        // 예시: FoundActors 배열에 있는 모든 액터들을 순회하며 로그 출력하기
-        //        for (AActor* Actor : FoundActors)
-        //        {
-        //            if (AYourActorClass* YourActor = Cast<AYourActorClass>(Actor))
-        //            {
-        //                // YourActor를 사용하여 원하는 작업을 수행할 수 있습니다.
-        //                // 예를 들어, 로그 출력
-        //                UE_LOG(LogTemp, Warning, TEXT("Found actor: %s"), *YourActor->GetName());
-        //            }
-        //        }
-        //    }
-        //}
+                for (AActor* Actor : FoundActors)
+                {
+                    if (AKWJ_BaseCharacter* PlayerCharacter = Cast<AKWJ_BaseCharacter>(Actor))
+                    {
+                        GEngine->AddOnScreenDebugMessage(
+                            -1,
+                            60.f,
+                            FColor::Yellow,
+                            FString::Printf(TEXT("Hi, I Have BaseCharacter"))
+                        );
+
+                        float CurHp = PlayerCharacter->GetCurHp();
+                        float MaxHp = PlayerCharacter->GetMaxHp();
+                        float CurStamina = PlayerCharacter->GetCurStamina();
+                        float MaxStamina = PlayerCharacter->GetMaxStamina();
+
+                        float HpPercent = CurHp / MaxHp;
+                        float StaminaPercent = CurStamina / MaxStamina;
+
+                        GEngine->AddOnScreenDebugMessage(
+                            -1,
+                            60.f,
+                            FColor::Yellow,
+                            FString::Printf(TEXT("My Hp Is %f Percent"), HpPercent)
+                        );
+
+                        UKWJ_TeamStateWidget* TeamStateWidget = CreateWidget<UKWJ_TeamStateWidget>(GetWorld(), TeamStateWidgetClass);
+                        if (TeamStateWidget)
+                        {
+                            GEngine->AddOnScreenDebugMessage(
+                                -1,
+                                60.f,
+                                FColor::Yellow,
+                                FString::Printf(TEXT("Create My Team State"))
+                            );
+
+                                TeamStateList->AddChild(TeamStateWidget);
+                                //TeamStateWidget->HpBar->SetPercent(HpPercent);
+                                //TeamStateWidget->StaminaBar->SetPercent(StaminaPercent);
+
+                        }
+
+                    }
+                }
+            }
+        
     }
 
         // Create an instance of your widget class
-        UKWJ_TeamStateWidget* TeamStateWidget = CreateWidget<UKWJ_TeamStateWidget>(GetWorld(), TeamStateWidgetClass);
-        if (TeamStateWidget)
-        {
-            UWidget* WidgetToAdd = TeamStateWidget->GetRootWidget();
-            if (WidgetToAdd)
-            {
-                VerticalBox->AddChild(WidgetToAdd);
-            }
-        }
+
  
 }
 

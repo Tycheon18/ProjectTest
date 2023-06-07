@@ -5,6 +5,7 @@
 #include "KWJ_PlayerController.h"
 #include "KWJ_GameMode.h"
 #include "Net/UnrealNetwork.h"
+#include "Engine/Engine.h"
 #include "Components/WidgetComponent.h"
 #include "KWJ_PlayerState.h"
 #include "BuildManagerComponent.h"
@@ -14,6 +15,9 @@ AKWJ_BaseCharacter::AKWJ_BaseCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//5PrimaryActorTick.bCanEverTick = true;
+
+	MaxHp = 100.0f;
+	CurHp = MaxHp;
 
 	OverheadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverheadWidget"));
 	OverheadWidget->SetupAttachment(RootComponent);
@@ -36,8 +40,7 @@ void AKWJ_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UpdateHUDHp();
-	UpdateHUDStamina();
+
 	PlayerController = Cast<AKWJ_PlayerController>(Controller);
 	if (PlayerController)
 	{
@@ -45,7 +48,23 @@ void AKWJ_BaseCharacter::BeginPlay()
 		PlayerController->SetHUDStamina(CurStamina, MaxStamina);
 	}
 
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		60.f,
+		FColor::Yellow,
+		FString::Printf(TEXT("My Hp is %f"), CurHp)
+	);
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		60.f,
+		FColor::Yellow,
+		FString::Printf(TEXT("My Stamina is %f"), CurStamina)
+	);
 
+	UpdateHUDHp();
+	UpdateHUDStamina();
+
+	CurHp -= 10;
 }
 
 void AKWJ_BaseCharacter::PollInit()
@@ -61,9 +80,16 @@ void AKWJ_BaseCharacter::PollInit()
 	}
 }
 
-void AKWJ_BaseCharacter::OnRep_Health()
+void AKWJ_BaseCharacter::OnRep_CurHp()
 {
+	GEngine->AddOnScreenDebugMessage(
+		-1,
+		30.0f,
+		FColor::Red,
+		FString::Printf(TEXT("OnRep_Health!"))
+	);
 
+	UpdateHUDHp();
 }
 
 void AKWJ_BaseCharacter::OnRep_Stamina()
@@ -75,8 +101,15 @@ void AKWJ_BaseCharacter::OnRep_Stamina()
 void AKWJ_BaseCharacter::UpdateHUDHp()
 {
 	PlayerController = PlayerController == nullptr ? Cast<AKWJ_PlayerController>(Controller) : PlayerController;
+
 	if (PlayerController)
 	{
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			30.0f,
+			FColor::Red,
+			FString::Printf(TEXT("Hp Updated!"))
+		);
 		PlayerController->SetHUDHp(CurHp, MaxHp);
 	}
 }
@@ -106,7 +139,6 @@ void AKWJ_BaseCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	PollInit();
-
 }
 
 // Called to bind functionality to input

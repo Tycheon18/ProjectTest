@@ -43,8 +43,8 @@ public:
 	class UVerticalBox* TeamStateList;
 
 	UPROPERTY(EditAnywhere, Category = "PlayerState")
-	TSubclassOf<class UUserWidget> TeamStateWidgetClass;
+	TSubclassOf<class UKWJ_TeamStateWidget> TeamStateWidgetClass;
 
 	UFUNCTION()
-	void AddTeamStateWidget(UVerticalBox* VerticalBox);
+	void AddTeamStateWidget();
 };

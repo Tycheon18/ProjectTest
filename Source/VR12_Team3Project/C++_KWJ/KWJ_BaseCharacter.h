@@ -30,6 +30,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building")
 	class UBuildManagerComponent* BuildManager;
+
+	UPROPERTY(ReplicatedUsing = OnRep_CurHp, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	float CurHp = 100.f;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -46,8 +49,7 @@ private:
 	UPROPERTY(EditAnywhere,  Category = "PlayerState")
 	float MaxHp = 100.f;
 
-	UPROPERTY(ReplicatedUsing = OnRep_Health, VisibleAnywhere,Category = "PlayerState")
-	float CurHp = 100.f;
+
 
 	UPROPERTY(EditAnywhere, Category = "PlayerState")
 	float MaxStamina = 100.f;
@@ -55,8 +57,8 @@ private:
 	UPROPERTY(ReplicatedUsing = OnRep_Stamina, VisibleAnywhere, Category = "PlayerState")
 	float CurStamina = 100.f;
 
-	UFUNCTION()
-	void OnRep_Health();
+	UFUNCTION(BlueprintCallable)
+	void OnRep_CurHp();
 
 	UFUNCTION()
 	void OnRep_Stamina();
@@ -83,4 +85,6 @@ public:
 
 	FORCEINLINE float GetCurHp() const { return CurHp; }
 	FORCEINLINE float GetMaxHp() const { return MaxHp; }
+	FORCEINLINE float GetCurStamina() const { return CurStamina; }
+	FORCEINLINE float GetMaxStamina() const { return MaxStamina; }
 };

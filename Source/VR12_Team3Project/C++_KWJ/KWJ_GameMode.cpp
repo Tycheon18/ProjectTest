@@ -14,11 +14,6 @@ namespace MatchState
 }
 
 
-
-AKWJ_GameMode::AKWJ_GameMode()
-{
-}
-
 void AKWJ_GameMode::MonsterEliminated(AKWJ_BaseCharacter* ElimmedCharacter, AKWJ_MonsterCharacter* VictimMonster, AKWJ_PlayerController AttackerController)
 {
 
@@ -69,20 +64,16 @@ void AKWJ_GameMode::PlayerLeftGame(class AKWJ_PlayerState* PlayerLeaving)
 	}
 }
 
-void AKWJ_GameMode::BeginPlay()
-{
-}
-
 void AKWJ_GameMode::OnMatchStateSet()
 {
 	Super::OnMatchStateSet();
 
-	for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
-	{
-		AKWJ_PlayerController* Player = Cast<AKWJ_PlayerController>(*It);
-		if (Player)
-		{
-			Player->OnMatchStateSet(MatchState);
-		}
-	}
+	//for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
+	//{
+	//	AKWJ_PlayerController* Player = Cast<AKWJ_PlayerController>(*It);
+	//	if (Player)
+	//	{
+	//		Player->OnMatchStateSet(MatchState);
+	//	}
+	//}
 }

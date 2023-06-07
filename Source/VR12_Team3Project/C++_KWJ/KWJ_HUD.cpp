@@ -11,7 +11,7 @@ void AKWJ_HUD::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AddCharacterStateWidget();
+	//AddCharacterStateWidget();
 
 }
 
@@ -22,6 +22,7 @@ void AKWJ_HUD::AddCharacterStateWidget()
 	{
 		CharacterStateWidget = CreateWidget<UKWJ_CharacterStateWidget>(PlayerController, CharacterStateWidgetClass);
 		CharacterStateWidget->AddToViewport();
+		CharacterStateWidget->AddTeamStateWidget();
 	}
 }
 
