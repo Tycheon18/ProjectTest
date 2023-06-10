@@ -17,69 +17,63 @@ void UKWJ_CharacterStateWidget::AddTeamStateWidget()
     {
         TeamStateList->ClearChildren();
 
-            UWorld* World = GetWorld();
-            if (World)
+        UWorld* World = GetWorld();
+        if (World)
+        {
+            TArray<AActor*> FoundActors;
+            UGameplayStatics::GetAllActorsOfClass(World, AKWJ_BaseCharacter::StaticClass(), FoundActors);
+
+            //GEngine->AddOnScreenDebugMessage(
+            //    1,
+            //    60.f,
+            //    FColor::Yellow,
+            //    FString::Printf(TEXT("Actors Num = %d"), sizeof(FoundActors))
+            //);
+
+            for (AActor* Actor : FoundActors)
             {
-                TArray<AActor*> FoundActors;
-                UGameplayStatics::GetAllActorsOfClass(World, AKWJ_BaseCharacter::StaticClass(), FoundActors);
-
-                GEngine->AddOnScreenDebugMessage(
-                    1,
-                    60.f,
-                    FColor::Yellow,
-                    FString::Printf(TEXT("Actors Num = %d"), sizeof(FoundActors))
-                );
-
-                for (AActor* Actor : FoundActors)
+                if (AKWJ_BaseCharacter* PlayerCharacter = Cast<AKWJ_BaseCharacter>(Actor))
                 {
-                    if (AKWJ_BaseCharacter* PlayerCharacter = Cast<AKWJ_BaseCharacter>(Actor))
+                    GEngine->AddOnScreenDebugMessage(
+                        -1,
+                        0.5f,
+                        FColor::Yellow,
+                        FString::Printf(TEXT("Hi, I Have BaseCharacter"))
+                    );
+
+                    float CurHp = PlayerCharacter->GetCurHp();
+                    float MaxHp = PlayerCharacter->GetMaxHp();
+                    float CurStamina = PlayerCharacter->GetCurStamina();
+                    float MaxStamina = PlayerCharacter->GetMaxStamina();
+
+
+
+                    float HpPercent = CurHp / MaxHp;
+                    float StaminaPercent = CurStamina / MaxStamina;
+
+                    UKWJ_TeamStateWidget* TeamStateWidget = CreateWidget<UKWJ_TeamStateWidget>(GetWorld(), TeamStateWidgetClass);
+                    if (TeamStateWidget)
                     {
                         GEngine->AddOnScreenDebugMessage(
                             -1,
-                            60.f,
+                            0.5f,
                             FColor::Yellow,
-                            FString::Printf(TEXT("Hi, I Have BaseCharacter"))
+                            FString::Printf(TEXT("Create My Team State"))
                         );
 
-                        float CurHp = PlayerCharacter->GetCurHp();
-                        float MaxHp = PlayerCharacter->GetMaxHp();
-                        float CurStamina = PlayerCharacter->GetCurStamina();
-                        float MaxStamina = PlayerCharacter->GetMaxStamina();
-
-                        float HpPercent = CurHp / MaxHp;
-                        float StaminaPercent = CurStamina / MaxStamina;
-
-                        GEngine->AddOnScreenDebugMessage(
-                            -1,
-                            60.f,
-                            FColor::Yellow,
-                            FString::Printf(TEXT("My Hp Is %f Percent"), HpPercent)
-                        );
-
-                        UKWJ_TeamStateWidget* TeamStateWidget = CreateWidget<UKWJ_TeamStateWidget>(GetWorld(), TeamStateWidgetClass);
-                        if (TeamStateWidget)
-                        {
-                            GEngine->AddOnScreenDebugMessage(
-                                -1,
-                                60.f,
-                                FColor::Yellow,
-                                FString::Printf(TEXT("Create My Team State"))
-                            );
-
-                                TeamStateList->AddChild(TeamStateWidget);
-                                //TeamStateWidget->HpBar->SetPercent(HpPercent);
-                                //TeamStateWidget->StaminaBar->SetPercent(StaminaPercent);
-
-                        }
+                        TeamStateList->AddChild(TeamStateWidget);
+                        TeamStateWidget->HpBar->SetPercent(HpPercent);
+                        TeamStateWidget->StaminaBar->SetPercent(StaminaPercent);
 
                     }
+
                 }
             }
-        
+        }
+
     }
 
-        // Create an instance of your widget class
+    // Create an instance of your widget class
 
- 
+
 }
-

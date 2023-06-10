@@ -35,6 +35,16 @@ public:
 	void OnMatchStateSet(FName State);
 	void HandleMatchHasStarted();
 	void HandleCooldown();
+
+	UPROPERTY(EditAnywhere, Category = "CharacterType")
+		TSubclassOf<class AKWJ_BaseCharacter> KnightCharacter;
+
+	UPROPERTY(EditAnywhere, Category = "CharacterType")
+		TSubclassOf<class AKWJ_BaseCharacter> GunnerCharacter;
+
+	UFUNCTION()
+	void SetTeamState();
+
 protected:
 	virtual void BeginPlay() override;
 	void SetHUDTime();
@@ -75,10 +85,9 @@ protected:
 	UFUNCTION()
 	void CreateTeamState();
 
-	UFUNCTION()
-	void SetTeamState();
+	UFUNCTION(BlueprintCallable)
+	void CharacterTypeChange();
 
-	
 private:
 	UPROPERTY();
 	class AKWJ_HUD* PlayerHUD;

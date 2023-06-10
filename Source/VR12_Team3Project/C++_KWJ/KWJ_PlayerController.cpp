@@ -457,7 +457,104 @@ void AKWJ_PlayerController::CreateTeamState()
 	//}
 }
 
+
+void AKWJ_PlayerController::CharacterTypeChange()
+{
+	ACharacter* MyCharacter = Cast<ACharacter>(GetPawn());
+	if (MyCharacter)
+	{
+
+		UClass* CharacterClass = MyCharacter->GetClass();
+		if (CharacterClass)
+		{
+			GEngine->AddOnScreenDebugMessage(
+				-1,
+				30.0f,
+				FColor::Yellow,
+				FString::Printf(TEXT("Character Type Change is Called"))
+			);
+
+			if (CharacterClass == KnightCharacter)
+			{
+				GEngine->AddOnScreenDebugMessage(
+					-1,
+					30.0f,
+					FColor::Yellow,
+					FString::Printf(TEXT("This is Knight Character"))
+				);
+
+				FRotator Rotation = MyCharacter->GetActorRotation();
+
+				UnPossess();
+
+				TArray<UStaticMeshComponent*> StaticMeshComponents;
+				MyCharacter->GetComponents<UStaticMeshComponent>(StaticMeshComponents);
+				for (UStaticMeshComponent* StaticMeshComponent : StaticMeshComponents)
+				{
+					StaticMeshComponent->DestroyComponent();
+				}
+
+				MyCharacter->Destroy();
+
+
+
+				APawn* NewCharacter = GetWorld()->SpawnActor<APawn>(GunnerCharacter, GetSpawnLocation(), Rotation);
+				if (NewCharacter)
+				{
+					Possess(NewCharacter);
+				}
+			}
+
+			if (CharacterClass == GunnerCharacter)
+			{
+				GEngine->AddOnScreenDebugMessage(
+					-1,
+					30.0f,
+					FColor::Yellow,
+					FString::Printf(TEXT("This is Gunner Character"))
+				);
+
+
+				FRotator Rotation = MyCharacter->GetActorRotation();
+
+				TArray<UStaticMeshComponent*> StaticMeshComponents;
+				MyCharacter->GetComponents<UStaticMeshComponent>(StaticMeshComponents);
+				for (UStaticMeshComponent* StaticMeshComponent : StaticMeshComponents)
+				{
+					StaticMeshComponent->DestroyComponent();
+				}
+
+
+				UnPossess();
+
+				MyCharacter->Destroy();
+
+
+
+				APawn* NewCharacter = GetWorld()->SpawnActor<APawn>(KnightCharacter, GetSpawnLocation(), Rotation);
+				if (NewCharacter)
+				{
+					Possess(NewCharacter);
+				}
+			}
+
+
+
+			// 캐릭터 클래스를 사용하여 작업 수행
+			// 예: 클래스 이름 가져오기, 속성 설정, 함수 호출 등
+		}
+	}
+}
+
 void AKWJ_PlayerController::SetTeamState()
 {
+	PlayerHUD = PlayerHUD == nullptr ? Cast<AKWJ_HUD>(GetHUD()) : PlayerHUD;
 
+	bool bTeamWidgetValid = PlayerHUD &&
+		PlayerHUD->CharacterStateWidget;
+
+	if (bTeamWidgetValid)
+	{
+		PlayerHUD->CharacterStateWidget->AddTeamStateWidget();
+	}
 }

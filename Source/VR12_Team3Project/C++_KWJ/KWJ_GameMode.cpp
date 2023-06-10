@@ -7,6 +7,7 @@
 #include "KWJ_PlayerState.h"
 #include "KWJ_MonsterCharacter.h"
 #include "KWJ_PlayerController.h"
+#include "Kismet/GamePlayStatics.h"
 
 namespace MatchState
 {
@@ -62,6 +63,24 @@ void AKWJ_GameMode::PlayerLeftGame(class AKWJ_PlayerState* PlayerLeaving)
 	{
 		//CharacterLeaving->Elim(true);
 	}
+}
+
+void AKWJ_GameMode::RenewTeamState()
+{
+	UWorld* World = GetWorld();
+	if (World)
+	{
+		for (FConstPlayerControllerIterator It = World->GetPlayerControllerIterator(); It; ++It)
+		{
+			AKWJ_PlayerController* PlayerController = Cast<AKWJ_PlayerController>(It->Get());
+			if (PlayerController)
+			{
+
+				PlayerController->SetTeamState();
+			}
+		}
+	}
+
 }
 
 void AKWJ_GameMode::OnMatchStateSet()

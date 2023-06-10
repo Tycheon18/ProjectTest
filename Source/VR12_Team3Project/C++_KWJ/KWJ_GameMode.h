@@ -38,6 +38,9 @@ public:
 
 	float LevelStartingTime = 0.f;
 
+	UFUNCTION()
+	void RenewTeamState();
+
 protected:
 	
 	virtual void OnMatchStateSet() override;

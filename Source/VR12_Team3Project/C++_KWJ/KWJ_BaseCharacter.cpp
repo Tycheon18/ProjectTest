@@ -82,19 +82,28 @@ void AKWJ_BaseCharacter::PollInit()
 
 void AKWJ_BaseCharacter::OnRep_CurHp()
 {
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		30.0f,
-		FColor::Red,
-		FString::Printf(TEXT("OnRep_Health!"))
-	);
-
 	UpdateHUDHp();
+
+	KWJ_GameMode = KWJ_GameMode == nullptr ? Cast<AKWJ_GameMode>(GetWorld()->GetAuthGameMode()) : KWJ_GameMode;
+
+	if (KWJ_GameMode)
+	{
+
+		KWJ_GameMode->RenewTeamState();
+	}
 }
 
 void AKWJ_BaseCharacter::OnRep_Stamina()
 {
+	UpdateHUDStamina();
 
+	KWJ_GameMode = KWJ_GameMode == nullptr ? Cast<AKWJ_GameMode>(GetWorld()->GetAuthGameMode()) : KWJ_GameMode;
+
+
+	if (KWJ_GameMode)
+	{
+		KWJ_GameMode->RenewTeamState();
+	}
 }
 
 
@@ -104,12 +113,6 @@ void AKWJ_BaseCharacter::UpdateHUDHp()
 
 	if (PlayerController)
 	{
-		GEngine->AddOnScreenDebugMessage(
-			-1,
-			30.0f,
-			FColor::Red,
-			FString::Printf(TEXT("Hp Updated!"))
-		);
 		PlayerController->SetHUDHp(CurHp, MaxHp);
 	}
 }

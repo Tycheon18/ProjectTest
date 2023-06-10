@@ -33,6 +33,15 @@ public:
 
 	UPROPERTY(ReplicatedUsing = OnRep_CurHp, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
 	float CurHp = 100.f;
+
+	UPROPERTY(ReplicatedUsing = OnRep_Stamina, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	float CurStamina = 100.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	float MaxHp = 100.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	float MaxStamina = 100.f;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -46,16 +55,6 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UWidgetComponent* OverheadWidget;
 
-	UPROPERTY(EditAnywhere,  Category = "PlayerState")
-	float MaxHp = 100.f;
-
-
-
-	UPROPERTY(EditAnywhere, Category = "PlayerState")
-	float MaxStamina = 100.f;
-
-	UPROPERTY(ReplicatedUsing = OnRep_Stamina, VisibleAnywhere, Category = "PlayerState")
-	float CurStamina = 100.f;
 
 	UFUNCTION(BlueprintCallable)
 	void OnRep_CurHp();
@@ -73,8 +72,7 @@ private:
 
 	bool bLeftGame = false;
 
-
-
+	class AKWJ_GameMode* KWJ_GameMode;
 
 public:	
 	// Called every frame
