@@ -31,16 +31,16 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Building")
 	class UBuildManagerComponent* BuildManager;
 
-	UPROPERTY(ReplicatedUsing = OnRep_CurHp, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	UPROPERTY(ReplicatedUsing = OnRep_CurHp, VisibleAnywhere, BlueprintReadWrite, Category = "PState")
 	float CurHp = 100.f;
 
-	UPROPERTY(ReplicatedUsing = OnRep_Stamina, VisibleAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	UPROPERTY(ReplicatedUsing = OnRep_Stamina, VisibleAnywhere, BlueprintReadWrite, Category = "PState")
 	float CurStamina = 100.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PState")
 	float MaxHp = 100.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerState")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PState")
 	float MaxStamina = 100.f;
 protected:
 	// Called when the game starts or when spawned
