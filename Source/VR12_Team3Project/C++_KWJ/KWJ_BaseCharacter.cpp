@@ -63,8 +63,6 @@ void AKWJ_BaseCharacter::BeginPlay()
 
 	UpdateHUDHp();
 	UpdateHUDStamina();
-
-	CurHp -= 10;
 }
 
 void AKWJ_BaseCharacter::PollInit()

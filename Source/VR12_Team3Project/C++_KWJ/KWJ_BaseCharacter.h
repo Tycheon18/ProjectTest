@@ -59,7 +59,7 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void OnRep_CurHp();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void OnRep_Stamina();
 
 	UPROPERTY(Replicated)
