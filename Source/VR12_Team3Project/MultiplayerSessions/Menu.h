@@ -17,7 +17,7 @@ class VR12_TEAM3PROJECT_API UMenu : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintCallable)
-		void MenuSetup(int32 NumberOfPublicConnections = 4, FString TypeOfMatch = FString(TEXT("FreeForAll")), FString LobbyPath = FString(TEXT("/Game/RBH/RBH_Mode_Maps/Weapon_Overview")));
+		void MenuSetup(int32 NumberOfPublicConnections = 4, FString TypeOfMatch = FString(TEXT("FreeForAll")), FString LobbyPath = FString(TEXT("/Game/LJJ/Content2/Isometric_World/NewMap_LJJ")));
 
 protected:
 
