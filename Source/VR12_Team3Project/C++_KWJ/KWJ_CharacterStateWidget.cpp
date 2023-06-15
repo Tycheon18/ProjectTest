@@ -45,7 +45,7 @@ void UKWJ_CharacterStateWidget::AddTeamStateWidget()
                     float MaxHp = PlayerCharacter->GetMaxHp();
                     float CurStamina = PlayerCharacter->GetCurStamina();
                     float MaxStamina = PlayerCharacter->GetMaxStamina();
-
+                    FString Name = PlayerCharacter->PlayerName;
 
 
                     float HpPercent = CurHp / MaxHp;
@@ -62,6 +62,7 @@ void UKWJ_CharacterStateWidget::AddTeamStateWidget()
                         );
 
                         TeamStateList->AddChild(TeamStateWidget);
+                        TeamStateWidget->PlayerName->SetText(FText::FromString(Name));
                         TeamStateWidget->HpBar->SetPercent(HpPercent);
                         TeamStateWidget->StaminaBar->SetPercent(StaminaPercent);
                     }

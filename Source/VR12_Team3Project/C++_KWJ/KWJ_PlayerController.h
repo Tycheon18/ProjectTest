@@ -46,6 +46,9 @@ public:
 	UFUNCTION()
 	void SetTeamState();
 
+	FString PlayerName;
+
+
 protected:
 	virtual void BeginPlay() override;
 	void SetHUDTime();
@@ -132,4 +135,5 @@ private:
 	int32 HUDCoin;
 	int32 HUDDefeats;
 
+	class UKWJ_GameInstance* GameInstance = nullptr;
 };

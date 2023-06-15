@@ -21,6 +21,8 @@ public:
 	UPROPERTY(Replicated)
 	TArray<class AKWJ_PlayerState*> TopScoringPlayers;
 
+	FString PlayerName;
+
 private:
 
 	float TopScore = 0.f;

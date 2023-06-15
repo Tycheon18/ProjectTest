@@ -38,15 +38,15 @@ void AKWJ_LobbyGameMode::PostLogin(APlayerController* NewPlayer)
 
 
 
-		if (NumberOfPlayers == 2)
-		{
-			UWorld* World = GetWorld();
-			if (World)
-			{
-				bUseSeamlessTravel = true;
-				//World->ServerTravel(FString("");
-			}
-		}
+		//if (NumberOfPlayers == 2)
+		//{
+		//	UWorld* World = GetWorld();
+		//	if (World)
+		//	{
+		//		bUseSeamlessTravel = true;
+		//		//World->ServerTravel(FString("");
+		//	}
+		//}
 	}
 }
 

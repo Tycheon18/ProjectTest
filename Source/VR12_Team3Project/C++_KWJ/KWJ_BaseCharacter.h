@@ -45,6 +45,9 @@ public:
 
 	UPROPERTY(ReplicatedUsing = OnRep_Coin, VisibleAnywhere, BlueprintReadWrite, Category = "PState")
 	int32 Coin = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PState")
+	FString PlayerName;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -92,5 +95,6 @@ public:
 	FORCEINLINE float GetMaxHp() const { return MaxHp; }
 	FORCEINLINE float GetCurStamina() const { return CurStamina; }
 	FORCEINLINE float GetMaxStamina() const { return MaxStamina; }
-	FORCEINLINE float GetCoin() const { return Coin; }
+	FORCEINLINE int32 GetCoin() const { return Coin; }
+	void GetPlayerName();
 };

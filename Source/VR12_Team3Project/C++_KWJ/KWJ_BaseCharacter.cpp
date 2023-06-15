@@ -16,9 +16,6 @@ AKWJ_BaseCharacter::AKWJ_BaseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	//5PrimaryActorTick.bCanEverTick = true;
 
-	MaxHp = 100.0f;
-	CurHp = MaxHp;
-
 	OverheadWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("OverheadWidget"));
 	OverheadWidget->SetupAttachment(RootComponent);
 
@@ -47,19 +44,6 @@ void AKWJ_BaseCharacter::BeginPlay()
 		PlayerController->SetHUDHp(CurHp, MaxHp);
 		PlayerController->SetHUDStamina(CurStamina, MaxStamina);
 	}
-
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		60.f,
-		FColor::Yellow,
-		FString::Printf(TEXT("My Hp is %f"), CurHp)
-	);
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		60.f,
-		FColor::Yellow,
-		FString::Printf(TEXT("My Stamina is %f"), CurStamina)
-	);
 
 	UpdateHUDHp();
 	UpdateHUDStamina();
@@ -161,5 +145,14 @@ void AKWJ_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AKWJ_BaseCharacter::GetPlayerName()
+{
+	PlayerController = PlayerController == nullptr ? Cast<AKWJ_PlayerController>(Controller) : PlayerController;
+	if (PlayerController)
+	{
+		PlayerName = PlayerController->PlayerName;
+	}
 }
 

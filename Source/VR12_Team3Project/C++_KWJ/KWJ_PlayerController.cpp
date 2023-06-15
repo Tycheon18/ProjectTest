@@ -17,6 +17,7 @@
 #include "KWJ_ReturnToMainMenu.h"
 #include "KWJ_TeamStateWidget.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/PlayerState.h"
 
 
 AKWJ_PlayerController::AKWJ_PlayerController()
@@ -27,9 +28,9 @@ void AKWJ_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PlayerName = PlayerState->GetPlayerName();
 	PlayerHUD = Cast<AKWJ_HUD>(GetHUD());
 	ServerCheckMatchState();
-
 }
 
 
