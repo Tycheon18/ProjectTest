@@ -42,12 +42,16 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PState")
 	float MaxStamina = 100.f;
+
+	UPROPERTY(ReplicatedUsing = OnRep_Coin, VisibleAnywhere, BlueprintReadWrite, Category = "PState")
+	int32 Coin = 0;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
 	void UpdateHUDHp();
 	void UpdateHUDStamina();
+	void UpdateHUDCoin();
 
 	void PollInit();
 
@@ -61,6 +65,9 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 	void OnRep_Stamina();
+
+	UFUNCTION(BlueprintCallable)
+	void OnRep_Coin();
 
 	UPROPERTY(Replicated)
 	class AWeaponBaseClass* Weapon;
@@ -85,4 +92,5 @@ public:
 	FORCEINLINE float GetMaxHp() const { return MaxHp; }
 	FORCEINLINE float GetCurStamina() const { return CurStamina; }
 	FORCEINLINE float GetMaxStamina() const { return MaxStamina; }
+	FORCEINLINE float GetCoin() const { return Coin; }
 };

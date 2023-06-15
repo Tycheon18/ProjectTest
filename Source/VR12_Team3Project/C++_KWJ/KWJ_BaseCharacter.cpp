@@ -63,6 +63,7 @@ void AKWJ_BaseCharacter::BeginPlay()
 
 	UpdateHUDHp();
 	UpdateHUDStamina();
+	UpdateHUDCoin();
 }
 
 void AKWJ_BaseCharacter::PollInit()
@@ -97,11 +98,15 @@ void AKWJ_BaseCharacter::OnRep_Stamina()
 
 	KWJ_GameMode = KWJ_GameMode == nullptr ? Cast<AKWJ_GameMode>(GetWorld()->GetAuthGameMode()) : KWJ_GameMode;
 
-
 	if (KWJ_GameMode)
 	{
 		KWJ_GameMode->RenewTeamState();
 	}
+}
+
+void AKWJ_BaseCharacter::OnRep_Coin()
+{
+	UpdateHUDCoin();
 }
 
 
@@ -121,6 +126,15 @@ void AKWJ_BaseCharacter::UpdateHUDStamina()
 	if (PlayerController)
 	{
 		PlayerController->SetHUDStamina(CurStamina, MaxStamina);
+	}
+}
+
+void AKWJ_BaseCharacter::UpdateHUDCoin()
+{
+	PlayerController = PlayerController == nullptr ? Cast<AKWJ_PlayerController>(Controller) : PlayerController;
+	if (PlayerController)
+	{
+		PlayerController->SetHUDCoin(Coin);
 	}
 }
 

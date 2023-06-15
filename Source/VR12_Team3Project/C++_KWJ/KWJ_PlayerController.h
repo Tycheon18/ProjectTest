@@ -20,6 +20,7 @@ public:
 	
 	void SetHUDHp(float CurHp, float MaxHp);
 	void SetHUDStamina(float CurStamina, float MaxStamina);
+	void SetHUDCoin(int Coin);
 	void SetHUDScore(float Score);
 	void SetHUDDefeats(int32 Defeats);
 	void SetHUDWeaponAmmo(int32 Ammo);
@@ -128,6 +129,7 @@ private:
 	float HUDStamina;
 	float HUDMaxStamina;
 	float HUDScore;
+	int32 HUDCoin;
 	int32 HUDDefeats;
 
 };

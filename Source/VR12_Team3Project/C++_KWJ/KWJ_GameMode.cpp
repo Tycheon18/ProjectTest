@@ -75,7 +75,6 @@ void AKWJ_GameMode::RenewTeamState()
 			AKWJ_PlayerController* PlayerController = Cast<AKWJ_PlayerController>(It->Get());
 			if (PlayerController)
 			{
-
 				PlayerController->SetTeamState();
 			}
 		}

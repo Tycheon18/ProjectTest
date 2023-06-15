@@ -112,6 +112,26 @@ void AKWJ_PlayerController::SetHUDStamina(float CurStamina, float MaxStamina)
 	}
 }
 
+void AKWJ_PlayerController::SetHUDCoin(int Coin)
+{
+	PlayerHUD = PlayerHUD == nullptr ? Cast<AKWJ_HUD>(GetHUD()) : PlayerHUD;
+
+	bool bHUDValid = PlayerHUD &&
+		PlayerHUD->CharacterStateWidget &&
+		PlayerHUD->CharacterStateWidget->StaminaBar &&
+		PlayerHUD->CharacterStateWidget->StaminaText;
+	if (bHUDValid)
+	{
+		FString CoinAmount = FString::Printf(TEXT("%d"), Coin);
+		PlayerHUD->CharacterStateWidget->CoinAmount->SetText(FText::FromString(CoinAmount));
+	}
+	else
+	{
+		bInitializeCharacterOverlay = true;
+		HUDCoin = Coin;
+	}
+}
+
 void AKWJ_PlayerController::SetHUDScore(float Score)
 {
 	PlayerHUD = PlayerHUD == nullptr ? Cast<AKWJ_HUD>(GetHUD()) : PlayerHUD;

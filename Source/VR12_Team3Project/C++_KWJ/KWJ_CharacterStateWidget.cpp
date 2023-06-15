@@ -64,9 +64,7 @@ void UKWJ_CharacterStateWidget::AddTeamStateWidget()
                         TeamStateList->AddChild(TeamStateWidget);
                         TeamStateWidget->HpBar->SetPercent(HpPercent);
                         TeamStateWidget->StaminaBar->SetPercent(StaminaPercent);
-
                     }
-
                 }
             }
         }
