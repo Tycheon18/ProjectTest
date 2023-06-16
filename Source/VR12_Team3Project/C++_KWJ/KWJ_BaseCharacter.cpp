@@ -30,6 +30,7 @@ void AKWJ_BaseCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AKWJ_BaseCharacter, CurHp);
 	DOREPLIFETIME(AKWJ_BaseCharacter, bDisableGameplay);
 	DOREPLIFETIME(AKWJ_BaseCharacter, CurStamina);
+	DOREPLIFETIME(AKWJ_BaseCharacter, Coin);
 }
 
 // Called when the game starts or when spawned

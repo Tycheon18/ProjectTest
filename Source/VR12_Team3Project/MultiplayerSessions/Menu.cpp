@@ -174,6 +174,9 @@ void UMenu::JoinButtonClicked()
 	JoinButton->SetIsEnabled(false);
 	if (MultiplayerSessionsSubsystem)
 	{
+		GEngine->AddOnScreenDebugMessage(
+			-1, 15.f, FColor::Blue, FString(TEXT("Join Button Clicked!"))
+		);
 		MultiplayerSessionsSubsystem->FindSessions(10000);
 	}
 }

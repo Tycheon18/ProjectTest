@@ -28,7 +28,7 @@ void AKWJ_PlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerName = PlayerState->GetPlayerName();
+	//PlayerName = PlayerState->GetPlayerName();
 	PlayerHUD = Cast<AKWJ_HUD>(GetHUD());
 	ServerCheckMatchState();
 }
